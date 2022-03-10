@@ -10,6 +10,9 @@ workspace "Infinity"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+include "Infinity/vendor/glfw"
+include "Infinity/vendor/Glad"
+
 project "Infinity"
     location "Infinity"
     kind "SharedLib"
@@ -21,9 +24,17 @@ project "Infinity"
     pchheader "ifpch.h"
     pchsource "Infinity/src/ifpch.cpp"
 
+    links
+    {
+        "GLFW",
+        "Glad",
+        "opengl32.lib"
+    }
+
     defines
     {
-        "IF_BUILD_DLL"
+        "IF_BUILD_DLL",
+        "GLFW_INCLUDE_NONE",
     }
 
     files
@@ -34,7 +45,10 @@ project "Infinity"
     
     includedirs
     {
-        "Infinity/src"
+        "%{prj.name}/vendor/spdlog/include",
+        "%{prj.name}/vendor/glfw/include",
+        "%{prj.name}/vendor/Glad/include",
+        "%{prj.name}/src"
     }
     
     postbuildcommands
@@ -63,5 +77,8 @@ project "Sandbox"
     }
     includedirs
     {
+    	"Infinity/vendor/spdlog/include",
+        "Infinity/vendor/glfw/include",
+        "Infinity/vendor/Glad/include",
         "Infinity/src"
     }

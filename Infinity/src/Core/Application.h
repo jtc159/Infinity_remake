@@ -1,5 +1,8 @@
+#pragma once
+
 #include "Core.h"
 #include "Window.h"
+#include "GLFW/glfw3.h"
 #include <memory>
 
 namespace Infinity
@@ -10,6 +13,9 @@ namespace Infinity
 		Application();
 		virtual ~Application();
 		void Run();
+
+		//void OnWindowClose(GLFWwindow*);
+		void OnWindowClose();
 
 		static Application& Get() { return *s_Instance; }
 		Window& GetWindow() { return *m_Window; }

@@ -1,4 +1,5 @@
 #include "Infinity.h"
+#include "Core/EntryPoint.h"
 
 
 class Sandbox : public Infinity::Application
