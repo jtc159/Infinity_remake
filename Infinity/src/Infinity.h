@@ -2,6 +2,8 @@
 
 #include "Core/Log.h"
 
+#include "ImGui/ImGuiLayer.h"
+
 // Application
 #include "Core/Application.h"
 

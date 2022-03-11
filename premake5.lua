@@ -12,6 +12,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 include "Infinity/vendor/glfw"
 include "Infinity/vendor/Glad"
+include "Infinity/vendor/imgui"
 
 project "Infinity"
     location "Infinity"
@@ -28,6 +29,7 @@ project "Infinity"
     {
         "GLFW",
         "Glad",
+        "ImGui",
         "opengl32.lib"
     }
 
@@ -48,6 +50,7 @@ project "Infinity"
         "%{prj.name}/vendor/spdlog/include",
         "%{prj.name}/vendor/glfw/include",
         "%{prj.name}/vendor/Glad/include",
+        "%{prj.name}/vendor/imgui",
         "%{prj.name}/src"
     }
     

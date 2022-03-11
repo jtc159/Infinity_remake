@@ -7,7 +7,7 @@ class Sandbox : public Infinity::Application
 public:
 	Sandbox()
 	{
-
+		PushOverlay(new Infinity::ImGuiLayer());
 	}
 
 	~Sandbox()

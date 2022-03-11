@@ -2,6 +2,7 @@
 #include "WindowsWindow.h"
 
 #include <glad/glad.h>
+#include "Event/WindowEventMarc.h"
 
 namespace Infinity
 {
@@ -14,7 +15,23 @@ namespace Infinity
 
 	Window* Window::Create(const WindowProps& props)
 	{
-		return new WindowsWindow(props);
+		Window* window = new WindowsWindow(props);
+
+		OnWindowResize += WINDOW_RESIZE_DELEGATE::CreateFromFunc<&WindowsWindow::WindowResizeEvent>();
+
+		OnKeyPress += KEY_PRESS_DELEGATE::CreateFromFunc<&WindowsWindow::KeyPressEvent>();
+		OnKeyType += KEY_TYPE_DELEGATE::CreateFromFunc<&WindowsWindow::KeyTypeEvent>();
+		OnKeyRepeat += KEY_REPEAT_DELEGATE::CreateFromFunc<&WindowsWindow::KeyRepeatEvent>();
+		OnKeyRelease += KEY_RELEASE_DELEGATE::CreateFromFunc<&WindowsWindow::KeyReleaseEvent>();
+
+		OnMousePress += MOUSE_PRESS_DELEGATE::CreateFromFunc<&WindowsWindow::MousePressEvent>();
+		OnMouseRepeat += MOUSE_REPEAT_DELEGATE::CreateFromFunc<&WindowsWindow::MouseRepeatEvent>();
+		OnMouseRelease += MOUSE_RELEASE_DELEGATE::CreateFromFunc<&WindowsWindow::MouseReleaseEvent>();
+
+		OnMouseMove += MOUSE_MOVE_DELEGATE::CreateFromFunc<&WindowsWindow::MouseMoveEvent>();
+		OnMouseScroll += MOUSE_SCROLL_DELEGATE::CreateFromFunc<&WindowsWindow::MouseScrollEvent>();
+
+		return window;
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)

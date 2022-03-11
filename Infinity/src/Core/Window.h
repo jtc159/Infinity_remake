@@ -2,6 +2,7 @@
 
 #include <string>
 #include "Event/EventTemplate.h"
+#include "Event/WindowEventMarc.h"
 #include "Core/Log.h"
 #include "GLFW//glfw3.h"
 
@@ -42,84 +43,18 @@ namespace Infinity
 		//static std::unique_ptr<Window> Create(const WindowProps& props = WindowProps());
 		static Window* Create(const WindowProps& props = WindowProps());
 
-		static IFDelegate<void()> OnWindowClose;
-		static IFDelegate<void(int, int)> OnWindowResize;
-		
-		static IFDelegate<void(int)> OnKeyPress;
-		static IFDelegate<void(int)> OnKeyType;
-		static IFDelegate<void(int)> OnKeyRepeat;
-		static IFDelegate<void(int)> OnKeyRelease;
+		static WINDOW_CLOSE_EVENT OnWindowClose;
+		static WINDOW_RESIZE_EVENT OnWindowResize;
 
-		static IFDelegate<void(int)> OnMousePress;
-		static IFDelegate<void(int)> OnMouseRepeat;
-		static IFDelegate<void(int)> OnMouseRelease;
-		static IFDelegate<void(float, float)> OnMouseMove;
-		static IFDelegate<void(float, float)> OnMouseScroll;
-	};
+		static KEY_PRESS_EVENT OnKeyPress;
+		static KEY_TYPE_EVENT OnKeyType;
+		static KEY_REPEAT_EVENT OnKeyRepeat;
+		static KEY_RELEASE_EVENT OnKeyRelease;
 
-	class WindowResizeEvent {
-	public:
-		static void OnEvent(int width, int height) {
-			IF_CORE_INFO("WindowResizeEvent : width({0}), height({1})", width, height);
-		}
-	};
-
-	class KeyPressEvent {
-	public:
-		static void OnEvent(int keycode) {
-			IF_CORE_INFO("KeyPressEvent : keycode({0})", keycode);
-		}
-	};
-
-	class KeyTypeEvent {
-	public:
-		static void OnEvent(int keycode) {
-			IF_CORE_ERROR("KeyTypeEvent : keycode({0})", keycode);
-		}
-	};
-
-	class KeyRepeatEvent {
-	public:
-		static void OnEvent(int keycode) {
-			IF_CORE_INFO("KeyRepeatEvent : keycode({0})", keycode);
-		}
-	};
-	class KeyReleaseEvent {
-	public:
-		static void OnEvent(int keycode) {
-			IF_CORE_INFO("KeyReleaseEvent : keycode({0})", keycode);
-		}
-	};
-	class MousePressEvent {
-	public:
-		static void OnEvent(int mousecode) {
-			IF_CORE_INFO("MousePressEvent : mousecode({0})", mousecode);
-		}
-	};
-	class MouseRepeatEvent {
-	public:
-		static void OnEvent(int mousecode) {
-			IF_CORE_INFO("MouseRepeatEvent : mousecode({0})", mousecode);
-		}
-	};
-	class MouseReleaseEvent {
-	public:
-		static void OnEvent(int mousecode) {
-			IF_CORE_INFO("MouseReleaseEvent : mousecode({0})", mousecode);
-		}
-	};
-
-	class MouseScrollEvent {
-	public:
-		static void OnEvent(float xOffset, float yOffset) {
-			IF_CORE_INFO("MouseScrollEvent : xOffset({0}), yOffset({1})", xOffset, yOffset);
-		}
-	};
-
-	class MouseMoveEvent {
-	public:
-		static void OnEvent(float xPos, float yPos) {
-			IF_CORE_INFO("MouseReleaseEvent : xPos({0}), yPos({1})", xPos, yPos);
-		}
+		static MOUSE_PRESS_EVENT OnMousePress;
+		static MOUSE_REPEAT_EVENT OnMouseRepeat;
+		static MOUSE_RELEASE_EVENT OnMouseRelease;
+		static MOUSE_MOVE_EVENT OnMouseMove;
+		static MOUSE_SCROLL_EVENT OnMouseScroll;
 	};
 }

@@ -4,17 +4,18 @@
 
 namespace Infinity
 {
-	IFDelegate<void()> Window::OnWindowClose = IFDelegate<void()>();
-	IFDelegate<void(int, int)> Window::OnWindowResize = IFDelegate<void(int, int)>::CreateFromFunc<&WindowResizeEvent::OnEvent>();
-	IFDelegate<void(int)> Window::OnKeyPress = IFDelegate<void(int)>::CreateFromFunc<&KeyPressEvent::OnEvent>();
-	IFDelegate<void(int)> Window::OnKeyType = IFDelegate<void(int)>::CreateFromFunc<&KeyTypeEvent::OnEvent>();
-	IFDelegate<void(int)> Window::OnKeyRepeat = IFDelegate<void(int)>::CreateFromFunc<&KeyRepeatEvent::OnEvent>();
-	IFDelegate<void(int)> Window::OnKeyRelease = IFDelegate<void(int)>::CreateFromFunc<&KeyReleaseEvent::OnEvent>();
-						 
-	IFDelegate<void(int)> Window::OnMousePress = IFDelegate<void(int)>::CreateFromFunc<&MousePressEvent::OnEvent>();
-	IFDelegate<void(int)> Window::OnMouseRepeat = IFDelegate<void(int)>::CreateFromFunc<&MouseRepeatEvent::OnEvent>();
-	IFDelegate<void(int)> Window::OnMouseRelease = IFDelegate<void(int)>::CreateFromFunc<&MouseReleaseEvent::OnEvent>();
+	WINDOW_CLOSE_EVENT Window::OnWindowClose = WINDOW_CLOSE_EVENT();
+	WINDOW_RESIZE_EVENT Window::OnWindowResize = WINDOW_RESIZE_EVENT();
 
-	IFDelegate<void(float, float)> Window::OnMouseScroll = IFDelegate<void(float, float)>::CreateFromFunc<&MouseScrollEvent::OnEvent>();
-	IFDelegate<void(float, float)> Window::OnMouseMove = IFDelegate<void(float, float)>::CreateFromFunc<&MouseMoveEvent::OnEvent>();
+	KEY_PRESS_EVENT Window::OnKeyPress = KEY_PRESS_EVENT();
+	KEY_TYPE_EVENT Window::OnKeyType = KEY_TYPE_EVENT();
+	KEY_REPEAT_EVENT Window::OnKeyRepeat = KEY_REPEAT_EVENT();
+	KEY_RELEASE_EVENT Window::OnKeyRelease = KEY_RELEASE_EVENT();
+
+	MOUSE_PRESS_EVENT Window::OnMousePress = MOUSE_PRESS_EVENT();
+	MOUSE_REPEAT_EVENT Window::OnMouseRepeat = MOUSE_REPEAT_EVENT();
+	MOUSE_RELEASE_EVENT Window::OnMouseRelease = MOUSE_RELEASE_EVENT();
+
+	MOUSE_MOVE_EVENT Window::OnMouseScroll = MOUSE_MOVE_EVENT();
+	MOUSE_SCROLL_EVENT Window::OnMouseMove = MOUSE_SCROLL_EVENT();
 }
