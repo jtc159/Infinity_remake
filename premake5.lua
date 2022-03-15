@@ -51,6 +51,7 @@ project "Infinity"
         "%{prj.name}/vendor/glfw/include",
         "%{prj.name}/vendor/Glad/include",
         "%{prj.name}/vendor/imgui",
+        "%{prj.name}/vendor/glm",
         "%{prj.name}/src"
     }
     
@@ -83,5 +84,6 @@ project "Sandbox"
     	"Infinity/vendor/spdlog/include",
         "Infinity/vendor/glfw/include",
         "Infinity/vendor/Glad/include",
+        "%{prj.name}/vendor/glm",
         "Infinity/src"
     }

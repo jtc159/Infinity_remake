@@ -2,10 +2,11 @@
 #include "ImGuiLayer.h"
 #include "imgui.h"
 #include "Core/Application.h"
-#include "imgui_impl_opengl3.h"
+#include "glad/glad.h"
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_opengl3.h"
 
 #include "Core/Log.h"
-#include "glad/glad.h"
 
 
 namespace Infinity
@@ -18,17 +19,33 @@ namespace Infinity
 	}
 	void ImGuiLayer::OnAttach()
 	{
+		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+		//io.ConfigViewportsNoAutoMerge = true;
+		//io.ConfigViewportsNoTaskBarIcon = true;
+
+		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();
+		//ImGui::StyleColorsClassic();
 
-		ImGuiIO& io = ImGui::GetIO();
-
-		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
-		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
-
-		ImGui_ImplOpenGL3_Init("#version 130");
+		// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+		ImGuiStyle& style = ImGui::GetStyle();
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			style.WindowRounding = 0.0f;
+			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+		}
 
 		Window& window = Application::Get().GetWindow();
+		// Setup Platform/Renderer backends
+		ImGui_ImplGlfw_InitForOpenGL((GLFWwindow*)window.GetNativeWindow(), true);
+		ImGui_ImplOpenGL3_Init("#version 130");
+
 
 		window.OnWindowClose += WINDOW_CLOSE_DELEGATE::CreateFromMethod<ImGuiLayer, &ImGuiLayer::WindowCloseEvent>(this);
 		window.OnWindowResize += WINDOW_RESIZE_DELEGATE::CreateFromMethod<ImGuiLayer, &ImGuiLayer::WindowResizeEvent>(this);
@@ -43,6 +60,7 @@ namespace Infinity
 		window.OnMouseMove += MOUSE_MOVE_DELEGATE::CreateFromMethod<ImGuiLayer, &ImGuiLayer::MouseMoveEvent>(this);
 		window.OnMouseScroll += MOUSE_SCROLL_DELEGATE::CreateFromMethod<ImGuiLayer, &ImGuiLayer::MouseScrollEvent>(this);
 	}
+
 	void ImGuiLayer::OnDetach()
 	{
 
@@ -60,6 +78,7 @@ namespace Infinity
 		m_Time = time;
 
 		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
 		static bool show_demo_window = true;
@@ -101,6 +120,13 @@ namespace Infinity
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			GLFWwindow* backup_current_context = glfwGetCurrentContext();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			glfwMakeContextCurrent(backup_current_context);
+		}
 	}
 	void ImGuiLayer::WindowCloseEvent()
 	{

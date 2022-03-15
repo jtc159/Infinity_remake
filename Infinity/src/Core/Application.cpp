@@ -2,6 +2,7 @@
 #include "Application.h"
 
 #include <glad/glad.h>
+#include "Core/Input.h"
 
 
 namespace Infinity
@@ -47,6 +48,12 @@ namespace Infinity
 			glClearColor(1, 1, 0, 0.5);
 			glClear(GL_COLOR_BUFFER_BIT);
 
+			if (Input::IsKeyPressed(258)) {
+				IF_TRACE("Tab");
+			}
+
+			auto pos = Input::GetMousePos();
+			IF_TRACE("{0}, {1}", pos.x, pos.y);
 			for (Layer* layer : m_LayerStack) {
 				layer->OnUpdate();
 			}
